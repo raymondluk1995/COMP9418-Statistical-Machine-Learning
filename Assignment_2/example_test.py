@@ -153,8 +153,7 @@ class SmartBuildingSimulatorExample:
         for sensor in self.reliable_motion_sensors + self.unreliable_motion_sensors:
             sensor_data[sensor.name] = current_data[sensor.name]
         for robot in self.robot_sensors:
-            robot.timestep(self)
-            sensor_data[robot.name] = current_data[sensor.name]
+            sensor_data[robot.name] = current_data[robot.name]
         for sensor in self.door_sensors:
             sensor_data[sensor.name] = current_data[sensor.name]
 
