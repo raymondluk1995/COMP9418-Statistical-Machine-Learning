@@ -1,0 +1,12 @@
+1.  Particle filtering 
+* Setup the transition probabilty for people moving from 1 room to the other 
+* Trace the movement, update with the evidence, and resample 
+* base on the Most probable movement made decision 
+* 3D hidden markov network 
+
+2. 34 separate netowrks.
+* check the max step staff can move 
+* construct hidden markov network for each room (max steps, evidence and also last period) 
+* inference one by one;
+* maybe for some y, linear regression/ decision is more accurate than this one.
+
