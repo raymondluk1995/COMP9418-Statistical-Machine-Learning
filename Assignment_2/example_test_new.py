@@ -78,8 +78,8 @@ class SmartBuildingSimulatorExample:
         self.num_lights = 35
         self.num_people = 20 
         self.start_time = datetime.time(hour=8,minute=0)
-        self.end_time = datetime.time(17,0)
-        self.time_step = datetime.timedelta(minutes=2) # 2 minute resolution
+        self.end_time = datetime.time(18,0)
+        self.time_step = datetime.timedelta(seconds=15) # 15 second
         
         self.current_time = self.start_time
 
@@ -146,8 +146,7 @@ class SmartBuildingSimulatorExample:
         self.cost += self.cost_of_prev_timestep(self.current_electricity_price)
         
         # update electricity price
-        # self.current_electricity_price *= np.random.choice([0.98,1/0.98,1.0]) # simple martingale
-        self.current_electricity_price = 1
+        #self.current_electricity_price *= np.random.choice([0.98,1/0.98,1.0]) # simple martingale
         
         # work out sensor data
         sensor_data = {}
@@ -190,14 +189,8 @@ class SmartBuildingSimulatorExample:
 simulator = SmartBuildingSimulatorExample()
 
 sensor_data = simulator.timestep()
-#for i in range(len(simulator.data)-1):
-    #actions_dict = get_action(sensor_data)
-    #sensor_data = simulator.timestep(actions_dict)
-#print(f"Total cost for the day: {simulator.cost} cents")
-
-
-for i in range(20):
+for i in range(len(simulator.data)-1):
     actions_dict = get_action(sensor_data)
     sensor_data = simulator.timestep(actions_dict)
-print(f"Total cost for the day: {simulator.cost} cents")
 
+print(f"Total cost for the day: {simulator.cost} cents")
