@@ -1,9 +1,29 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Thu Nov 19 10:06:17 2020
+'''
+COMP9418 Assignment 2
+This file is the example code to show how the assignment will be tested.
 
-@author: user
-"""
+Name: Minrui Lu    zID: z5277884
+
+Name:  Yangqi Zhang   zID: z5235062
+'''
+
+import numpy as np 
+import pandas as pd
+import datetime 
+
+
+tran_matrix_0 = pd.read_csv("tran_matrix0.csv")
+tran_matrix_1 = pd.read_csv("tran_matrix1.csv")
+tran_matrix_2 = pd.read_csv("tran_matrix2.csv")
+tran_matrix_3 = pd.read_csv("tran_matrix3.csv")
+tran_matrix_4 = pd.read_csv("tran_matrix4.csv")
+
+tran_matrix0 = np.array([tran_matrix_0.iloc[i].values.tolist()[2:] for i in range(tran_matrix_0.shape[0])])
+tran_matrix1 = np.array([tran_matrix_1.iloc[i].values.tolist()[2:] for i in range(tran_matrix_1.shape[0])])
+tran_matrix2 = np.array([tran_matrix_2.iloc[i].values.tolist()[2:] for i in range(tran_matrix_2.shape[0])])
+tran_matrix3 = np.array([tran_matrix_3.iloc[i].values.tolist()[2:] for i in range(tran_matrix_3.shape[0])])
+tran_matrix4 = np.array([tran_matrix_4.iloc[i].values.tolist()[2:] for i in range(tran_matrix_4.shape[0])]) 
+
 
 def choose_tran_matrix(time):
     if(time<datetime.time(hour=8,minute=1)):
@@ -15,7 +35,7 @@ def choose_tran_matrix(time):
     elif (time<datetime.time(hour=17,minute=41)):
         return tran_matrix3 
     else:
-        return tran_matrix4 
+        return tran_matrix4   
 
 
 def robot_overwrite(robot_info, vector):

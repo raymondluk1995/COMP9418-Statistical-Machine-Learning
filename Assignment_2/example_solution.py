@@ -11,10 +11,6 @@ Name:  Yangqi Zhang   zID: z5235062
 WARNING: The interpreter of Python must be version of 3.7.3 on Vlab
 '''
 
-# Make division default to floating-point, saving confusion
-from __future__ import division
-from __future__ import print_function
-
 # Allowed libraries 
 import numpy as np
 import pandas as pd
@@ -39,6 +35,8 @@ import re
 
 import my_function
 
+
+
 ###################################
 # Code stub
 # 
@@ -46,35 +44,11 @@ import my_function
 # and that function must take sensor_data as an argument, and return an actions_dict
 # 
 
-tran_matrix_0 = pd.read_csv("tran_matrix0.csv")
-tran_matrix_1 = pd.read_csv("tran_matrix1.csv")
-tran_matrix_2 = pd.read_csv("tran_matrix2.csv")
-tran_matrix_3 = pd.read_csv("tran_matrix3.csv")
-tran_matrix_4 = pd.read_csv("tran_matrix4.csv")
-
-tran_matrix0 = np.array([tran_matrix_0.iloc[i].values.tolist()[2:] for i in range(tran_matrix_0.shape[0])])
-tran_matrix1 = np.array([tran_matrix_1.iloc[i].values.tolist()[2:] for i in range(tran_matrix_1.shape[0])])
-tran_matrix2 = np.array([tran_matrix_2.iloc[i].values.tolist()[2:] for i in range(tran_matrix_2.shape[0])])
-tran_matrix3 = np.array([tran_matrix_3.iloc[i].values.tolist()[2:] for i in range(tran_matrix_3.shape[0])])
-tran_matrix4 = np.array([tran_matrix_4.iloc[i].values.tolist()[2:] for i in range(tran_matrix_4.shape[0])]) 
-
 
 censor_to_room_indx = {'r1' : 15, 'r2': 4, 'r3':24, 'r4': 30, 
                        'u1': 39, 'u2': 37, 'u3': 0, 'u4': 23,
                       'd1': [7,8], 'd2': [35,36], 'd3': [25,26], 'd4': [34,38]}
 
-
-def choose_tran_matrix(time):
-    if(time<datetime.time(hour=8,minute=1)):
-        return tran_matrix0 
-    elif (time<datetime.time(hour=8,minute=5)):
-        return tran_matrix1 
-    elif (time<datetime.time(hour=17,minute=30)):
-        return tran_matrix2
-    elif (time<datetime.time(hour=17,minute=41)):
-        return tran_matrix3 
-    else:
-        return tran_matrix4   
 
 
 people = round(np.random.normal(20,1)) 
@@ -88,23 +62,20 @@ curr_state = init_state
 # calls to get_action 
 state = {} 
 
-# params = pd.read_csv(...)
 
 def get_action(sensor_data):
     # declare state as a global variable so it can be read and modified within this function
     global curr_state
-    # global params
-    #print(curr_state)
-    # TODO: Add code to generate your chosen actions, using the current state and sensor_data
+  
     light_list = ['lights1', 'lights2', 'lights3', 'lights4', 'lights5', 'lights6', 'lights7', 'lights8', 'lights9', 'lights10', 'lights11', 'lights12', 'lights13', 'lights14', 'lights15', 'lights16', 'lights17', 'lights18', 'lights19', 'lights20', 'lights21', 'lights22', 'lights23', 'lights24', 'lights25', 'lights26', 'lights27', 'lights28', 'lights29', 'lights30', 'lights31', 'lights32', 'lights33', 'lights34', 'lights35']
     sensor_only = my_function.keep_sensor_info(sensor_data)
     
-    tran_matrix = choose_tran_matrix(sensor_data['time'])
+    tran_matrix = my_function.choose_tran_matrix(sensor_data['time'])
     
     #print(tran_matrix)
     
-    
-    curr_state = curr_state @ tran_matrix #transition 
+    curr_state = np.dot(curr_state,tran_matrix)
+    # curr_state = curr_state @ tran_matrix #transition 
     curr_state = my_function.censor_update(sensor_only, censor_to_room_indx, curr_state) #update by censors 
     
     decision_by_state = my_function.make_decision(curr_state)
