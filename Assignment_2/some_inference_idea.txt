@@ -10,3 +10,10 @@
 * inference one by one;
 * maybe for some y, linear regression/ decision is more accurate than this one.
 
+----------------------------
+
+issue now: 
+1. 7 timesteps rather than 5 
+2. censor updates to 1, should adjust according to censor accuracy 
+3. Resample techniques??
+4. time it 
