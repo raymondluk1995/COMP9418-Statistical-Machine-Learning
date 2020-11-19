@@ -88,6 +88,17 @@ class SmartBuildingSimulatorExample:
         self.productivity_cost = 4 
         # cumulative cost so far today
         self.cost = 0
+        self.penalty = 0 
+        self.waste = 0
+        self.correct = 0
+
+        self.real_room = ['r1', 'r2', 'r3', 'r4', 'r5', 'r6', 'r7', 'r8', 'r9', 'r10', 'r11', 'r12', 'r13', 'r14', 'r15', 'r16', 'r17', 'r18', 'r19', 'r20', 'r21', 'r22', 'r23', 'r24', 'r25', 'r26', 'r27', 'r28', 'r29', 'r30', 'r31', 'r32', 'r33', 'r34', 'r35']
+
+        self.penalty_count = {room:0 for room in self.real_room}
+        self.waste_count = {room:0 for room in self.real_room}
+        self.correct_count = {room:0 for room in self.real_room}
+
+
 
         self.people = [Person(i) for i in range(1,self.num_people+1)]
 
@@ -145,6 +156,9 @@ class SmartBuildingSimulatorExample:
 
         # calculate cost
         self.cost += self.cost_of_prev_timestep(self.current_electricity_price)
+        self.penalty += self.cost_of_prev_penalty(self.current_electricity_price)
+        self.waste += self.cost_of_prev_waste(self.current_electricity_price)
+        self.correct +=  self.cost_of_prev_correct(self.current_electricity_price)
         
         # update electricity price
         #self.current_electricity_price *= np.random.choice([0.98,1/0.98,1.0]) # simple martingale
@@ -185,6 +199,48 @@ class SmartBuildingSimulatorExample:
                 raise Exception("Invalid light state")
         return cost
 
+    def cost_of_prev_penalty(self, electricity_price):
+        '''
+        calculates the cost incurred in the previous 2 minutes
+        '''
+        cost = 0
+        for light, state in self.lights.items():
+            room_num = 'r' + (light[6:]) # extract number from string
+            
+            if state == 'off':
+                if (self.room_occupancy[room_num]>0):
+                    cost += self.productivity_cost*self.room_occupancy[room_num] 
+                    self.penalty_count[room_num] +=1         
+        return cost
+
+    def cost_of_prev_waste(self, electricity_price):
+        '''
+        calculates the cost incurred in the previous 2 minutes
+        '''
+        cost = 0
+        for light, state in self.lights.items():
+            room_num = 'r' + (light[6:]) # extract number from string
+            
+            if state == 'on':
+                if (self.room_occupancy[room_num]==0):
+                    cost += self.current_electricity_price
+                    self.waste_count[room_num] +=1         
+        return cost
+
+    def cost_of_prev_correct(self, electricity_price):
+        '''
+        calculates the cost incurred in the previous 2 minutes
+        '''
+        cost = 0
+        for light, state in self.lights.items():
+            room_num = 'r' + (light[6:]) # extract number from string
+            
+            if state == 'on':
+                if (self.room_occupancy[room_num]>0):
+                    cost += self.current_electricity_price
+                    self.correct_count[room_num] +=1         
+        return cost
+
 
 
 simulator = SmartBuildingSimulatorExample()
@@ -200,4 +256,21 @@ for i in range(len(simulator.data)-1):
 end = time.time()
 
 print(f"Total cost for the day: {simulator.cost} cents")
-print("time cost is ",end-begin)
+# print("time cost is ",end-begin)
+print(f"Total penalty for the day: {simulator.penalty} cents")
+print(f"Total waste for the day: {simulator.waste} cents")
+print(f"Total correct for the day: {simulator.correct} cents")
+
+sort_penalty_count = {k: v for k, v in sorted(simulator.penalty_count.items(), key=lambda item: item[1],reverse=True)}
+sort_waste_count = {k: v for k, v in sorted(simulator.waste_count.items(), key=lambda item: item[1],reverse=True)}
+sort_correct_count = {k: v for k, v in sorted(simulator.correct_count.items(), key=lambda item: item[1],reverse=True)}
+
+print("\n\n")
+print("sort penalty count is \n",sort_penalty_count)
+
+print("\n\n")
+print("sort waste count is \n",sort_waste_count)
+
+print("\n\n")
+print("sort correct count is \n",sort_correct_count)
+
