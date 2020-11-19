@@ -115,6 +115,11 @@ def keep_sensor_info(sensor_dict):
     sensor_info = {k:v for k,v in sensor_dict.items() if k!='time' if k!= 'electricity_price'}
     return(sensor_info)
     
-    
+  
+def resample(curr_state, people_num):
+    prob_state = [i/sum(curr_state) for i in curr_state]
+    sampling = list(np.random.choice(41,people_num, p = prob_state))
+    new_people = [sampling.count(i) for i in range(41)]
+    return(new_people)
     
     
