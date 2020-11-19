@@ -28,6 +28,7 @@ import datetime
 import sklearn
 import re
 import ast
+import time
 
 
 # import the function written by the student
@@ -188,9 +189,15 @@ class SmartBuildingSimulatorExample:
 
 simulator = SmartBuildingSimulatorExample()
 
+begin = time.time()
+
+
 sensor_data = simulator.timestep()
 for i in range(len(simulator.data)-1):
     actions_dict = get_action(sensor_data)
     sensor_data = simulator.timestep(actions_dict)
 
+end = time.time()
+
 print(f"Total cost for the day: {simulator.cost} cents")
+print("time cost is ",end-begin)

@@ -54,15 +54,21 @@ def censor_update(sensor_data, censor_room_match, state_vector):
     for censor_name, censor_status in sensor_data.items():
         if censor_status == None:
             continue 
-        if censor_status == "no motion":
-            continue
-        if censor_status == 0:
+        if censor_status == "no motion": 
+            # print("censor_name:",censor_name)
+            # continue
+            censor_abb = censor_name[0] + censor_name[-1]
+            room = censor_room_match[censor_abb]
+            state_vector[room] = 0
+            continue 
+
+        if censor_status == 0: 
             continue
         if censor_status == "motion":
             censor_abb = censor_name[0] + censor_name[-1]
             room = censor_room_match[censor_abb]
             state_vector[room] = max(state_vector[room], 1)
-        elif censor_name[:2] == 'ro':
+        elif censor_name[:3] == 'rob':
             state_vector = robot_overwrite(censor_status, state_vector)
         
         elif censor_status > 0:
@@ -70,24 +76,6 @@ def censor_update(sensor_data, censor_room_match, state_vector):
             rooms = censor_room_match[censor_abb]
             state_vector[rooms] = [max(state_vector[rooms[0]], 1), max(state_vector[rooms[1]],1)]
 
-    return(state_vector)
-    for censor_name, censor_status in sensor_data.items():
-        if censor_status == None:
-            continue 
-        if censor_status == "no motion":
-            continue
-        if censor_status == 0:
-            continue
-        if censor_status == "motion":
-            censor_abb = censor_name[0] + censor_name[-1]
-            room = censor_room_match[censor_abb]
-            state_vector[room] = max(state_vector[room], 1)
-        if censor_status > 0:
-            censor_abb = censor_name[0] + censor_name[-1]
-            rooms = censor_room_match[censor_abb]
-            state_vector[rooms] = [max(state_vector[rooms[0]], 1), max(state_vector[rooms[1]],1)]
-        if censor_name[:2] == 'ro':
-            state_vector = robot_overwrite(censor_status, state_vector)
     return(state_vector)
 
 

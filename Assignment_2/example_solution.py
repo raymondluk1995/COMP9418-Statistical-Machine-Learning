@@ -51,7 +51,7 @@ censor_to_room_indx = {'r1' : 15, 'r2': 4, 'r3':24, 'r4': 30,
 
 
 
-people = round(np.random.normal(20,1)) 
+# people = round(np.random.normal(20,1)) 
 people = 20
 init_state = np.array([0]*40+[people])
 
@@ -75,7 +75,6 @@ def get_action(sensor_data):
     #print(tran_matrix)
     
     curr_state = np.dot(curr_state,tran_matrix)
-    # curr_state = curr_state @ tran_matrix #transition 
     curr_state = my_function.censor_update(sensor_only, censor_to_room_indx, curr_state) #update by censors 
     
     decision_by_state = my_function.make_decision(curr_state)
