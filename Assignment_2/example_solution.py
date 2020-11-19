@@ -2,9 +2,13 @@
 COMP9418 Assignment 2
 This file is the example code to show how the assignment will be tested.
 
-Name:     zID:
+Name: Minrui Lu    zID: z5277884
 
-Name:     zID:
+Name:  Yangqi Zhang   zID: z5235062
+'''
+
+'''
+WARNING: The interpreter of Python must be version of 3.7.3 on Vlab
 '''
 
 # Make division default to floating-point, saving confusion
@@ -70,8 +74,7 @@ def choose_tran_matrix(time):
     elif (time<datetime.time(hour=17,minute=41)):
         return tran_matrix3 
     else:
-        return tran_matrix4  
-        return tran_matrix4 
+        return tran_matrix4   
 
 
 people = round(np.random.normal(20,1)) 
@@ -90,7 +93,7 @@ state = {}
 def get_action(sensor_data):
     # declare state as a global variable so it can be read and modified within this function
     global curr_state
-    global params
+    # global params
     #print(curr_state)
     # TODO: Add code to generate your chosen actions, using the current state and sensor_data
     light_list = ['lights1', 'lights2', 'lights3', 'lights4', 'lights5', 'lights6', 'lights7', 'lights8', 'lights9', 'lights10', 'lights11', 'lights12', 'lights13', 'lights14', 'lights15', 'lights16', 'lights17', 'lights18', 'lights19', 'lights20', 'lights21', 'lights22', 'lights23', 'lights24', 'lights25', 'lights26', 'lights27', 'lights28', 'lights29', 'lights30', 'lights31', 'lights32', 'lights33', 'lights34', 'lights35']
