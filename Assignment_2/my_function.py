@@ -17,12 +17,20 @@ tran_matrix_1 = pd.read_csv("tran_matrix1.csv")
 tran_matrix_2 = pd.read_csv("tran_matrix2.csv")
 tran_matrix_3 = pd.read_csv("tran_matrix3.csv")
 tran_matrix_4 = pd.read_csv("tran_matrix4.csv")
+tran_matrix_5 = pd.read_csv("tran_matrix5.csv")
+tran_matrix_6 = pd.read_csv("tran_matrix6.csv")
+tran_matrix_7 = pd.read_csv("tran_matrix7.csv")
+tran_matrix_8 = pd.read_csv("tran_matrix8.csv")
 
 tran_matrix0 = np.array([tran_matrix_0.iloc[i].values.tolist()[2:] for i in range(tran_matrix_0.shape[0])])
 tran_matrix1 = np.array([tran_matrix_1.iloc[i].values.tolist()[2:] for i in range(tran_matrix_1.shape[0])])
 tran_matrix2 = np.array([tran_matrix_2.iloc[i].values.tolist()[2:] for i in range(tran_matrix_2.shape[0])])
 tran_matrix3 = np.array([tran_matrix_3.iloc[i].values.tolist()[2:] for i in range(tran_matrix_3.shape[0])])
 tran_matrix4 = np.array([tran_matrix_4.iloc[i].values.tolist()[2:] for i in range(tran_matrix_4.shape[0])]) 
+tran_matrix5 = np.array([tran_matrix_5.iloc[i].values.tolist()[2:] for i in range(tran_matrix_5.shape[0])])
+tran_matrix6 = np.array([tran_matrix_6.iloc[i].values.tolist()[2:] for i in range(tran_matrix_6.shape[0])])
+tran_matrix7 = np.array([tran_matrix_7.iloc[i].values.tolist()[2:] for i in range(tran_matrix_7.shape[0])])
+tran_matrix8 = np.array([tran_matrix_8.iloc[i].values.tolist()[2:] for i in range(tran_matrix_8.shape[0])]) 
 
 
 def choose_tran_matrix(time):
@@ -30,12 +38,20 @@ def choose_tran_matrix(time):
         return tran_matrix0 
     elif (time<datetime.time(hour=8,minute=5)):
         return tran_matrix1 
-    elif (time<datetime.time(hour=17,minute=30)):
+    elif (time<datetime.time(hour=10,minute=0)):
         return tran_matrix2
-    elif (time<datetime.time(hour=17,minute=41)):
+    elif (time<datetime.time(hour=12,minute=0)):
         return tran_matrix3 
-    else:
+    elif (time<datetime.time(hour=14,minute=0)):
         return tran_matrix4   
+    elif (time<datetime.time(hour=16,minute=0)):
+        return tran_matrix5 
+    elif (time<datetime.time(hour=17,minute=30)):
+        return tran_matrix6 
+    elif (time<datetime.time(hour=17,minute=41)):
+        return tran_matrix7 
+    else:
+        return tran_matrix8
 
 
 
