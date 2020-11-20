@@ -62,12 +62,10 @@ def u2_update(state_vector):
     state_vector[20] = max(state_vector[20],0.25)
     return (state_vector)
 
-def r2_update(state_vector):
-    # state_vector[8] = min(state_vector[8],0.24)
-    # state_vector[12] = min(state_vector[12],0.25)
-    # state_vector[5] = max(state_vector[5],0.26)
+def u3_update(state_vector):
+    state_vector[3] = min(state_vector[3],0.251)
+    # state_vector[1] = max(state_vector[1],0.26)
     return (state_vector)
-
 
 def robot_overwrite(robot_info, vector):
     "arguments: a string of robot information pair;"
@@ -100,10 +98,8 @@ def censor_update(sensor_data, censor_room_match, state_vector):
             room = censor_room_match[censor_abb]
             if(censor_abb=="u2"):
                 state_vector = u2_update(state_vector) 
-            elif(censor_abb=="r2"):
-                state_vector = r2_update(state_vector)
-
-            
+            elif(censor_abb=="u3"):
+                state_vector = u3_update(state_vector)          
             state_vector[room] = max(state_vector[room], 1)
         elif censor_name[:3] == 'rob':
             state_vector = robot_overwrite(censor_status, state_vector)

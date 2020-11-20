@@ -25,14 +25,13 @@ import copy
 import sys
 import os
 import datetime
-import sklearn
 import re
 import ast
 import time
 
 
 # import the function written by the student
-from example_solution import get_action
+from solution import get_action
 
 # simulator code
 class Person:    
