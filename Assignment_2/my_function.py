@@ -64,7 +64,6 @@ def u2_update(state_vector):
 
 def u3_update(state_vector):
     state_vector[3] = min(state_vector[3],0.251)
-    # state_vector[1] = max(state_vector[1],0.26)
     return (state_vector)
 
 def robot_overwrite(robot_info, vector):
